@@ -23,6 +23,10 @@
         "media_id": {
           "name": "Media ID",
           "description": "The media ID to announce instead of using text-to-speech."
+        },
+        "allow_response": {
+          "name": "Allow response",
+          "description": "If the user is able to respond to the announcement."
         }
       }
     }

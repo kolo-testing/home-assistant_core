@@ -47,9 +47,11 @@ class MockAssistSatellite(AssistSatelliteEntity):
         """Handle pipeline events."""
         self.events.append(event)
 
-    async def async_announce(self, message: str, media_id: str) -> None:
+    async def async_announce(
+        self, message: str, media_id: str, allow_response: bool
+    ) -> None:
         """Announce media on a device."""
-        self.announcements.append((message, media_id))
+        self.announcements.append((message, media_id, allow_response))
 
 
 @pytest.fixture

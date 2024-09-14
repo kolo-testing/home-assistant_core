@@ -121,6 +121,7 @@ class AssistSatelliteEntity(entity.Entity):
         self,
         message: str | None = None,
         media_id: str | None = None,
+        allow_response: bool = False,
     ) -> None:
         """Play and show an announcement on the satellite.
 
@@ -176,12 +177,14 @@ class AssistSatelliteEntity(entity.Entity):
 
         try:
             # Block until announcement is finished
-            await self.async_announce(message, media_id)
+            await self.async_announce(message, media_id, allow_response)
         finally:
             self._is_announcing = False
             self._set_state(AssistSatelliteState.LISTENING_WAKE_WORD)
 
-    async def async_announce(self, message: str, media_id: str) -> None:
+    async def async_announce(
+        self, message: str, media_id: str, allow_response: bool
+    ) -> None:
         """Announce media on the satellite.
 
         Should block until the announcement is done playing.

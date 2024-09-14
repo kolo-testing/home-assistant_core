@@ -269,7 +269,9 @@ class EsphomeAssistSatellite(
 
         self.cli.send_voice_assistant_event(event_type, data_to_send)
 
-    async def async_announce(self, message: str, media_id: str) -> None:
+    async def async_announce(
+        self, message: str, media_id: str, allow_response: bool
+    ) -> None:
         """Announce media on the satellite.
 
         Should block until the announcement is done playing.

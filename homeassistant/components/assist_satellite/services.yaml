@@ -14,3 +14,11 @@ announce:
       required: false
       selector:
         text:
+    allow_response:
+      required: false
+      default: false
+      selector:
+        boolean:
+      filter:
+        supported_features:
+          - assist_satellite.AssistSatelliteEntityFeature.ANNOUNCE_RESPONSE

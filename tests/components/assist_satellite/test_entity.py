@@ -158,19 +158,20 @@ async def test_new_pipeline_cancels_pipeline(
     ("service_data", "expected_params"),
     [
         (
-            {"message": "Hello"},
-            ("Hello", "https://www.home-assistant.io/resolved.mp3"),
+            {"message": "Hello", "allow_response": True},
+            ("Hello", "https://www.home-assistant.io/resolved.mp3", True),
         ),
         (
             {
                 "message": "Hello",
                 "media_id": "http://example.com/bla.mp3",
+                "allow_response": False,
             },
-            ("Hello", "http://example.com/bla.mp3"),
+            ("Hello", "http://example.com/bla.mp3", False),
         ),
         (
             {"media_id": "http://example.com/bla.mp3"},
-            ("", "http://example.com/bla.mp3"),
+            ("", "http://example.com/bla.mp3", False),
         ),
     ],
 )
@@ -195,10 +196,10 @@ async def test_announce(
     original_announce = entity.async_announce
     announce_started = asyncio.Event()
 
-    async def async_announce(message, media_id):
+    async def async_announce(message, media_id, allow_response):
         # Verify state change
         assert entity.state == AssistSatelliteState.RESPONDING
-        await original_announce(message, media_id)
+        await original_announce(message, media_id, allow_response)
         announce_started.set()
 
     def tts_generate_media_source_id(
@@ -249,7 +250,7 @@ async def test_announce_busy(
     announce_started = asyncio.Event()
     got_error = asyncio.Event()
 
-    async def async_announce(message, media_id):
+    async def async_announce(message, media_id, allow_response):
         announce_started.set()
 
         # Block so we can do another announcement

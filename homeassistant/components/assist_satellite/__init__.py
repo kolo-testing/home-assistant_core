@@ -41,6 +41,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                 {
                     vol.Optional("message"): str,
                     vol.Optional("media_id"): str,
+                    vol.Optional("allow_response"): bool,
                 }
             ),
             cv.has_at_least_one_key("message", "media_id"),
