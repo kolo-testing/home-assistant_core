@@ -14,11 +14,19 @@ announce:
       required: false
       selector:
         text:
-    allow_response:
+start_conversation:
+  target:
+    entity:
+      domain: assist_satellite
+      supported_features:
+        - assist_satellite.AssistSatelliteEntityFeature.START_CONVERSATION
+  fields:
+    start_message:
       required: false
-      default: false
+      example: "You left the lights on in the living room. Turn them off?"
       selector:
-        boolean:
-      filter:
-        supported_features:
-          - assist_satellite.AssistSatelliteEntityFeature.ANNOUNCE_RESPONSE
+        text:
+    start_media_id:
+      required: false
+      selector:
+        text:

@@ -36,22 +36,31 @@ class MockAssistSatellite(AssistSatelliteEntity):
     """Mock Assist Satellite Entity."""
 
     _attr_name = "Test Entity"
-    _attr_supported_features = AssistSatelliteEntityFeature.ANNOUNCE
+    _attr_supported_features = (
+        AssistSatelliteEntityFeature.ANNOUNCE
+        | AssistSatelliteEntityFeature.START_CONVERSATION
+    )
+    _attr_tts_options = {"test-option": "test-value"}
 
     def __init__(self) -> None:
         """Initialize the mock entity."""
         self.events = []
         self.announcements = []
+        self.start_conversations = []
 
     def on_pipeline_event(self, event: PipelineEvent) -> None:
         """Handle pipeline events."""
         self.events.append(event)
 
-    async def async_announce(
-        self, message: str, media_id: str, allow_response: bool
-    ) -> None:
+    async def async_announce(self, message: str, media_id: str) -> None:
         """Announce media on a device."""
-        self.announcements.append((message, media_id, allow_response))
+        self.announcements.append((message, media_id))
+
+    async def async_start_conversation(
+        self, start_message: str, start_media_id: str
+    ) -> None:
+        """Start a conversation from the satellite."""
+        self.start_conversations.append((start_message, start_media_id))
 
 
 @pytest.fixture

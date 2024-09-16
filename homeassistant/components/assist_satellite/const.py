@@ -11,5 +11,5 @@ class AssistSatelliteEntityFeature(IntFlag):
     ANNOUNCE = 1
     """Device supports remotely triggered announcements."""
 
-    ANNOUNCE_RESPONSE = 2
-    """Device supports responding to announcements."""
+    START_CONVERSATION = 2
+    """Device supports starting conversations."""
