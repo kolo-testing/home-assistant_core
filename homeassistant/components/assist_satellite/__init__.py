@@ -57,7 +57,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         [AssistSatelliteEntityFeature.ANNOUNCE],
     )
     async_register_websocket_api(hass)
-    hass.http.register_view(ConnectionTestView())
+    hass.http.async_register_view(ConnectionTestView())
 
     return True
 
