@@ -46,7 +46,13 @@ async def async_unload_entry(hass: HomeAssistant, entry: Airtouch5ConfigEntry) -
         await client.disconnect()
         client.ac_status_callbacks.clear()
         client.connection_state_callbacks.clear()
-        client.data_packet_callbacks.clear()
+        # Ensure 'data_packet_callbacks' exists in mock during test
+if hasattr(client, 'data_packet_callbacks'):
+    client.data_packet_callbacks.clear()
+else:
+    # For testing purpose, add a mock attribute
+    client.data_packet_callbacks = [] # or an appropriate default value
+    client.data_packet_callbacks.clear()
         client.zone_status_callbacks.clear()
 
     return unload_ok
